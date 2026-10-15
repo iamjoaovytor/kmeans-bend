@@ -1,0 +1,97 @@
+lloyd1982:
+  type: article
+  title: Least squares quantization in PCM
+  author: Lloyd, Stuart P.
+  date: 1982
+  page-range: 129-137
+  parent:
+    type: periodical
+    title: IEEE Transactions on Information Theory
+    volume: 28
+    issue: 2
+
+macqueen1967:
+  type: article
+  title: Some methods for classification and analysis of multivariate observations
+  author: MacQueen, James
+  date: 1967
+  page-range: 281-297
+  parent:
+    type: proceedings
+    title: Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability
+
+vattani2011:
+  type: article
+  title: k-means requires exponentially many iterations even in the plane
+  author: Vattani, Andrea
+  date: 2011
+  page-range: 596-616
+  parent:
+    type: periodical
+    title: Discrete & Computational Geometry
+    volume: 45
+    issue: 4
+
+arthur2011:
+  type: article
+  title: Smoothed analysis of the k-means method
+  author:
+    - "Arthur, David"
+    - "Manthey, Bodo"
+    - "Röglin, Heiko"
+  date: 2011
+  parent:
+    type: periodical
+    title: Journal of the ACM
+    volume: 58
+    issue: 5
+
+arthur2007:
+  type: article
+  title: "k-means++: the advantages of careful seeding"
+  author:
+    - "Arthur, David"
+    - "Vassilvitskii, Sergei"
+  date: 2007
+  page-range: 1027-1035
+  parent:
+    type: proceedings
+    title: Proceedings of the 18th Annual ACM-SIAM Symposium on Discrete Algorithms (SODA)
+
+brent1974:
+  type: article
+  title: The parallel evaluation of general arithmetic expressions
+  author: Brent, Richard P.
+  date: 1974
+  page-range: 201-206
+  parent:
+    type: periodical
+    title: Journal of the ACM
+    volume: 21
+    issue: 2
+
+cormen2009:
+  type: book
+  title: Introduction to Algorithms
+  author:
+    - "Cormen, Thomas H."
+    - "Leiserson, Charles E."
+    - "Rivest, Ronald L."
+    - "Stein, Clifford"
+  edition: 3
+  date: 2009
+  publisher: MIT Press
+
+bendrt2026:
+  type: report
+  title: "BendRT: A Parallel Runtime for CPUs and GPUs"
+  author:
+    - "Taelin, Victor"
+    - "Battistela, Lorenzo W."
+    - "Cavalcanti, Paulo J."
+    - "Abril, Nicolas"
+    - "Neves, Vitor Chiarelli"
+    - "Ostroski, Vanessa"
+  date: 2026
+  organization: Higher Order Company
+  url: https://github.com/bendlang/bend/blob/main/paper/BendRT.pdf

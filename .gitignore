@@ -1,0 +1,6 @@
+# binários compilados
+kmeans
+kmeans_gpu
+*.gpu
+.DS_Store
+__pycache__/

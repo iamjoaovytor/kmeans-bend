@@ -5,7 +5,7 @@ FB UNI · Análise de Algoritmos · 2026
 
 Versão em PDF: [`relatorio/relatorio.pdf`](relatorio/relatorio.pdf)
 
-> **Reprodutibilidade.** `kmeans.bend` (algoritmo), `referencia.py` e `validar.py` (referência em Python e conferência), `medir.py` e `caso_medio.py` (medições), `relatorio/figuras.py` (figuras). Todas as medições num Apple M4 Pro (8 núcleos de desempenho e 4 de eficiência) com Bend 2.0.36; no 2.0.37 a conferência passa igual e os tempos variam menos de 5%. Como rodar: [no fim desta página](#como-rodar).
+> **Reprodutibilidade.** `src/kmeans.bend` (algoritmo), `scripts/referencia.py` e `scripts/validar.py` (referência em Python e conferência), `scripts/medir.py` e `scripts/caso_medio.py` (medições, em `dados/`), `relatorio/figuras.py` (figuras). Todas as medições num Apple M4 Pro (8 núcleos de desempenho e 4 de eficiência) com Bend 2.0.36; no 2.0.37 a conferência passa igual e os tempos variam menos de 5%. Como rodar: [no fim desta página](#como-rodar).
 
 ## Resumo
 
@@ -136,7 +136,7 @@ Rodamos o algoritmo em 400 conjuntos de dados diferentes, com 16 mil pontos e $k
 
 ### 5.4 Otimização
 
-A primeira versão (`kmeans_v1.bend`) criava, em cada ponto, uma lista com as $k$ somas, quase toda de zeros, e juntava listas inteiras em cada nó: um custo extra de $\Theta(nk)$ em alocação. A versão com somas esparsas reduz esse custo para $\Theta(n \log k)$ sem mudar a operação básica. Com $n \approx 10^6$ e $k = 8$, o tempo por iteração caiu de 190 para 67 ms em 1 núcleo, de 55 para 17 ms em 12 núcleos e de 70 para 20 ms na GPU. A Figura 4 mostra o efeito ao variar $k$: antes o tempo dobrava a cada $k$ dobrado; depois segue $ank + bn \log k$, e o termo $nk$ ainda domina quando $k$ cresce.
+A primeira versão (`src/kmeans_v1.bend`) criava, em cada ponto, uma lista com as $k$ somas, quase toda de zeros, e juntava listas inteiras em cada nó: um custo extra de $\Theta(nk)$ em alocação. A versão com somas esparsas reduz esse custo para $\Theta(n \log k)$ sem mudar a operação básica. Com $n \approx 10^6$ e $k = 8$, o tempo por iteração caiu de 190 para 67 ms em 1 núcleo, de 55 para 17 ms em 12 núcleos e de 70 para 20 ms na GPU. A Figura 4 mostra o efeito ao variar $k$: antes o tempo dobrava a cada $k$ dobrado; depois segue $ank + bn \log k$, e o termo $nk$ ainda domina quando $k$ cresce.
 
 ![Tempo por iteração em função de k](relatorio/fig_k.svg)
 
@@ -167,31 +167,36 @@ Duas extensões ficaram de fora: testar dimensões $d > 2$ (a análise vale para
 
 ## Como rodar
 
-Requer [Bend](https://bend-lang.com) 2.0.36 ou mais novo, Python 3 e, para o PDF, [Typst](https://typst.app).
+Requer [Bend](https://bend-lang.com) 2.0.36 ou mais novo, Python 3 e, para o PDF, [Typst](https://typst.app). Os comandos rodam na raiz do repositório.
 
 ```sh
 # compilar (no macOS, usar o cc da Apple) e assinar o binário
-CC=/usr/bin/cc bend kmeans.bend -o kmeans && codesign -f -s - kmeans
+CC=/usr/bin/cc bend src/kmeans.bend -o kmeans && codesign -f -s - kmeans
 
 # ./kmeans <log2 n> <k> <modo 0=grupos 1=uniforme> <max iteracoes> <semente> <historico 0|1>
 ./kmeans 14 8 1 200 15 1
 
-python3 validar.py      # confere com a referência em Python
-python3 medir.py        # tempo por iteração
-python3 caso_medio.py   # 400 execuções
+python3 scripts/validar.py      # confere com a referência em Python
+python3 scripts/medir.py        # tempo por iteração (imprime os CSVs)
+python3 scripts/caso_medio.py   # 400 execuções, grava em dados/
 
 # relatório
-cd relatorio && python3 figuras.py && typst compile relatorio.typ
+python3 relatorio/figuras.py && typst compile relatorio/relatorio.typ
 ```
 
-| Arquivo | O quê |
-|---|---|
-| `kmeans.bend` | o algoritmo: pontos numa árvore, passo 1 em paralelo, somas esparsas por grupo |
-| `kmeans_gpu.bend` | o mesmo, com o passo 1 na GPU |
-| `kmeans_v1.bend` | primeira versão, antes da otimização das somas |
-| `args.bend` | leitura dos argumentos da linha de comando |
-| `referencia.py`, `validar.py` | referência em Python com a mesma aritmética e a conferência contra o Bend |
-| `medir.py` | tempo por iteração variando $n$, $k$ e núcleos |
-| `caso_medio.py` | 400 execuções para o caso médio e a curva do custo $J$ |
-| `resultados*.csv`, `iteracoes.csv`, `custo_j.csv` | os dados medidos |
-| `relatorio/` | o relatório em Typst, as referências e as figuras |
+## Estrutura
+
+```
+src/          código em Bend
+  kmeans.bend       o algoritmo: pontos numa árvore, passo 1 em paralelo, somas esparsas por grupo
+  kmeans_gpu.bend   o mesmo, com o passo 1 na GPU
+  kmeans_v1.bend    primeira versão, antes da otimização das somas
+  args.bend         leitura dos argumentos da linha de comando
+scripts/      Python
+  referencia.py     referência com a mesma aritmética F32 e a mesma ordem de somas
+  validar.py        confere o binário contra a referência
+  medir.py          tempo por iteração variando n, k e núcleos
+  caso_medio.py     400 execuções para o caso médio e a curva do custo J
+dados/        os CSVs medidos, lidos por relatorio/figuras.py
+relatorio/    o relatório em Typst, as referências, as figuras e o PDF
+```

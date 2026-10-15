@@ -1,8 +1,8 @@
-# Gera as figuras SVG do relatorio a partir dos CSVs medidos (rodar dentro de relatorio/).
+# Gera as figuras SVG do relatorio a partir dos CSVs medidos em dados/.
 import csv, math, os, statistics
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-DADOS = os.path.dirname(AQUI)
+DADOS = os.path.join(os.path.dirname(AQUI), "dados")
 TINTA, FRACA, GRADE = "#073642", "#586e75", "#e4dcc3"
 AZUL, VIOLETA, LARANJA = "#268bd2", "#6c71c4", "#cb4b16"
 FONTE = 'font-family="Libertinus Serif" font-size="9"'

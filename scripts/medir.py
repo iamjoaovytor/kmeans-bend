@@ -1,11 +1,13 @@
 # Mede o kmeans: custo por iteracao (variando n, k e threads) e numero de iteracoes por tipo de dado.
-import re, subprocess, time
+import os, re, subprocess, time
+RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BIN = os.path.join(RAIZ, "kmeans")
 
 def tempo(args, reps=3):
     melhor, out = None, ""
     for _ in range(reps):
         t0 = time.perf_counter()
-        out = subprocess.run(["./kmeans", *map(str, args)], capture_output=True, text=True, check=True).stdout
+        out = subprocess.run([BIN, *map(str, args)], capture_output=True, text=True, check=True).stdout
         dt = time.perf_counter() - t0
         melhor = dt if melhor is None else min(melhor, dt)
     return melhor, out

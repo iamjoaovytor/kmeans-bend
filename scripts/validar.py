@@ -1,5 +1,7 @@
 # Confere o kmeans compilado contra referencia.py: iteracoes e centroides.
 import os, re, subprocess, sys
+RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BIN = os.path.join(RAIZ, "kmeans")
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from referencia import kmeans
 
@@ -7,7 +9,7 @@ casos = [(10, 8, 0, 0), (12, 4, 0, 0), (12, 8, 1, 0), (13, 16, 0, 0), (14, 8, 1,
          (10, 8, 1, 3), (12, 8, 0, 7), (13, 5, 1, 42), (12, 16, 1, 99)]
 ok = True
 for d, k, modo, sem in casos:
-    out = subprocess.run(["./kmeans", str(d), str(k), str(modo), "200", str(sem), "1"], capture_output=True, text=True, check=True).stdout
+    out = subprocess.run([BIN, str(d), str(k), str(modo), "200", str(sem), "1"], capture_output=True, text=True, check=True).stdout
     it = int(re.search(r"iteracoes: (\d+)", out).group(1))
     cs = [tuple(map(float, p)) for p in re.findall(r"\(([-\d.e]+), ([-\d.e]+)\)", out)]
     hist_ref = []

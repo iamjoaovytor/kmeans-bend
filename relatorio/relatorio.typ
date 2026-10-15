@@ -50,7 +50,7 @@
   #rect(width: 100%, stroke: 1pt + tinta, inset: 6pt)[
     #set text(size: 8pt)
     #set par(first-line-indent: 0em)
-    #smallcaps[Reprodutibilidade.] Código e dados em #link("https://github.com/iamjoaovytor/kmeans-bend")[github.com/iamjoaovytor/kmeans-bend]: `kmeans.bend` (algoritmo), `referencia.py` e `validar.py` (referência em Python e conferência), `medir.py` e `caso_medio.py` (medições), `relatorio/figuras.py` (figuras). Todas as medições num Apple M4 Pro (8 núcleos de desempenho e 4 de eficiência) com Bend 2.0.36; no 2.0.37 a conferência passa igual e os tempos variam menos de 5%.
+    #smallcaps[Reprodutibilidade.] Código e dados em #link("https://github.com/iamjoaovytor/kmeans-bend")[github.com/iamjoaovytor/kmeans-bend]: `src/kmeans.bend` (algoritmo), `scripts/referencia.py` e `scripts/validar.py` (referência em Python e conferência), `scripts/medir.py` e `scripts/caso_medio.py` (medições, em `dados/`), `relatorio/figuras.py` (figuras). Todas as medições num Apple M4 Pro (8 núcleos de desempenho e 4 de eficiência) com Bend 2.0.36; no 2.0.37 a conferência passa igual e os tempos variam menos de 5%.
   ]
   #v(6pt)
 ]

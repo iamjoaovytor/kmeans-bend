@@ -4,3 +4,6 @@ kmeans_gpu
 *.gpu
 .DS_Store
 __pycache__/
+
+# entrega intermediária da disciplina, só local
+ESBOCO.md
